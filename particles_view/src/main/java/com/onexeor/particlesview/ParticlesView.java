@@ -36,7 +36,6 @@ public class ParticlesView extends View {
 
     private int backgroundColor;
 
-
     private List<DotItem> items;
 
     private Paint linePaint;
@@ -67,8 +66,9 @@ public class ParticlesView extends View {
         init(context, attrs);
     }
 
+    // TODO need to add filled polygons between triangles
     private void init(Context context, AttributeSet attributeSet) {
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
+        setLayerType(LAYER_TYPE_HARDWARE, null);
         if (attributeSet != null) {
             final TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.ParticlesView, 0, 0);
 
@@ -109,6 +109,7 @@ public class ParticlesView extends View {
             // Moving particles
             moveParticles(itemI);
         }
+        invalidate();
     }
 
     private void moveParticles(DotItem item) {
@@ -126,10 +127,10 @@ public class ParticlesView extends View {
         else if (item.getPosition().y - item.getSize() <= 5) item.setVy(-item.getVy());
 
         pointF.set(pointF.x + (item.getVx() * ms), pointF.y + (item.getVy() * ms));
-        postInvalidate();
     }
 
     private void linkParticles(int i, DotItem itemI, Canvas canvas) {
+//        canvas.save();
         for (int j = i + 1; j < items.size(); j++) {
             DotItem itemj = items.get(j);
             float dx = itemI.getPosition().x - itemj.getPosition().x;
@@ -147,8 +148,8 @@ public class ParticlesView extends View {
                     canvas.drawPath(path, linePaint);
                 }
             }
-            invalidate();
         }
+//        canvas.restore();
     }
 
 
