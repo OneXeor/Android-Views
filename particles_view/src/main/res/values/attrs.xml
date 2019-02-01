@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ParticlesView">
+        <attr name="pv_nodes_size" format="dimension" />
+        <attr name="pv_nodes_color" format="color" />
+        <attr name="pv_nodes_count" format="integer" />
+        <attr name="pv_nodes_speed_max" format="float" />
+        <attr name="pv_nodes_speed_min" format="float" />
+
+        <attr name="pv_background_color" format="color" />
+
+        <attr name="pv_linking_nodes_distance" format="integer" />
+        <attr name="pv_linking_line_color" format="color" />
+        <attr name="pv_linking_line_width" format="dimension" />
+
+    </declare-styleable>
+</resources>

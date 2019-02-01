@@ -4,13 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackRed"
+    android:background="@color/colorBlack"
     tools:context=".MainActivity">
 
-    <io.singulart.particlesviewsample.ParticlesView
+    <com.onexeor.particlesview.ParticlesView
         android:id="@+id/p.v"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:pv_nodes_count="250"
+        app:pv_nodes_size="2dp"
+        app:pv_linking_line_width="1dp"
+        app:pv_linking_nodes_distance="200"
+        app:pv_background_color="@color/colorBlack"
+        app:pv_nodes_color="@color/colorWhite"
+        app:pv_nodes_speed_min="1"
+        app:pv_nodes_speed_max="10"
+        app:pv_linking_line_color="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

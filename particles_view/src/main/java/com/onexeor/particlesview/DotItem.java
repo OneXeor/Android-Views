@@ -1,8 +1,9 @@
-package io.singulart.particlesviewsample;
+package com.onexeor.particlesview;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.util.Log;
 
 public class DotItem {
 
@@ -18,6 +19,15 @@ public class DotItem {
 
     private float vx = 1;
     private float vy = 1;
+
+    public DotItem() {
+        init();
+    }
+
+    public DotItem(float size) {
+        this.size = size;
+        init();
+    }
 
     DotItem(float size, PointF position, int color) {
         this.size = size;
@@ -82,6 +92,22 @@ public class DotItem {
         this.vy = vy;
     }
 
+    public void setSize(float size) {
+        this.size = size;
+    }
+
+    public void setPosition(PointF position) {
+        this.position = position;
+    }
+
+    public void setPaint(Paint paint) {
+        this.paint = paint;
+    }
+
+    public float getSize() {
+        return size;
+    }
+
     void render(Canvas canvas) {
         if (canvas != null)
             canvas.drawCircle(position.x, position.y, size, paint);
@@ -89,5 +115,6 @@ public class DotItem {
 
     public void setColor(int color) {
         this.color = color;
+        initPaint();
     }
 }
