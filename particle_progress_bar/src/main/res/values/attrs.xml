@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ParticleProgressBar">
+
+        <attr name="ppb_color" format="color" />
+        <attr name="ppb_count_balls" format="integer" />
+        <attr name="ppb_cx" format="integer" />
+        <attr name="ppb_cy" format="integer" />
+
+    </declare-styleable>
+</resources>
