@@ -8,13 +8,21 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
+import static android.view.MotionEvent.ACTION_POINTER_DOWN;
+import static android.view.MotionEvent.ACTION_UP;
+
 public class ParticlesView extends View {
+
+    private static int DEFAULT_ALPHA = 255;
 
     private int[] lineColor;
 
@@ -42,6 +50,13 @@ public class ParticlesView extends View {
 
     private Path path;
 
+    private float touchPosX;
+
+    private float touchPosY;
+
+    private float touchableRadius;
+
+    private boolean touchable;
 
     public ParticlesView(Context context) {
         super(context);
@@ -84,6 +99,9 @@ public class ParticlesView extends View {
 
             backgroundColor = a.getColor(R.styleable.ParticlesView_pv_background_color, Color.BLACK);
 
+            touchable = a.getBoolean(R.styleable.ParticlesView_pv_touchable, false);
+            touchableRadius = a.getDimension(R.styleable.ParticlesView_pv_touchable_radius, 100);
+
             initDef();
             a.recycle();
         }
@@ -94,9 +112,27 @@ public class ParticlesView extends View {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (touchable)
+            switch (event.getAction()) {
+                case ACTION_POINTER_DOWN:
+                case ACTION_DOWN:
+                case ACTION_MOVE:
+                    touchPosX = event.getX();
+                    touchPosY = event.getY();
+                    return true;
+                case ACTION_UP:
+                    touchPosX = -1;
+                    touchPosY = -1;
+                    return true;
+            }
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(items == null)
+        if (items == null)
             createDots();
         // Fill background
         canvas.drawColor(backgroundColor);
@@ -108,15 +144,37 @@ public class ParticlesView extends View {
             linkParticles(i, itemI, canvas);
             // Moving particles
             moveParticles(itemI);
+
+            if (touchable)
+                repulseParticles(itemI);
         }
         invalidate();
+    }
+
+    private void repulseParticles(DotItem dotItem) {
+        if (touchPosY > 0 && touchPosX > 0) {
+            float dxM = dotItem.getPosition().x - touchPosX;
+            float dyM = dotItem.getPosition().y - touchPosY;
+
+            float distM = (float) Math.sqrt(dxM * dxM + dyM * dyM);
+
+            float[] vector = new float[]{(dxM / distM), dyM / distM};
+            float repulseRad = touchableRadius;
+            int vel = 100;
+
+            float repFactor = (float) Math.max(0, Math.min(50, (1 / repulseRad) * (-1 * Math.pow(distM / repulseRad, 2) + 1) * repulseRad * vel));
+
+            float[] pos = new float[]{dotItem.getPosition().x + vector[0] * repFactor, dotItem.getPosition().y + vector[1] * repFactor};
+
+            if (pos[0] > 5 && pos[1] > 5 && pos[0] < getWidth() - 5 && pos[1] < getHeight() - 5)
+                dotItem.setPosition(new PointF(pos[0], pos[1]));
+        }
     }
 
     private void moveParticles(DotItem item) {
         // move particle
         PointF pointF = item.getPosition();
         float ms = item.getSpeed() / 2;
-
 
         if (item.getPosition().x + item.getSize() >= getWidth() - 5)
             item.setVx(-item.getVx());
@@ -130,7 +188,6 @@ public class ParticlesView extends View {
     }
 
     private void linkParticles(int i, DotItem itemI, Canvas canvas) {
-//        canvas.save();
         for (int j = i + 1; j < items.size(); j++) {
             DotItem itemj = items.get(j);
             float dx = itemI.getPosition().x - itemj.getPosition().x;
@@ -141,17 +198,16 @@ public class ParticlesView extends View {
                 path.moveTo(itemI.getPosition().x, itemI.getPosition().y);
                 path.lineTo(itemj.getPosition().x, itemj.getPosition().y);
                 path.close();
-                int opacity = (int) ((255 / linkingNodeDistance) * (linkingNodeDistance - dist));
 
-                if (opacity > 0) {
-                    linePaint.setARGB(opacity, lineColor[1], lineColor[2], lineColor[3]);
+                int alpha = DEFAULT_ALPHA - (int) ((dist / linkingNodeDistance) * DEFAULT_ALPHA);
+
+                if (alpha > 0) {
+                    linePaint.setARGB(alpha, lineColor[1], lineColor[2], lineColor[3]);
                     canvas.drawPath(path, linePaint);
                 }
             }
         }
-//        canvas.restore();
     }
-
 
     private void createDots() {
         items = new ArrayList<>();

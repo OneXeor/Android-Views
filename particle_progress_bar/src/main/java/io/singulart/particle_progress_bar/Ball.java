@@ -8,7 +8,6 @@ public class Ball {
 
     private Paint paint;
     private float size;
-    private float constSize;
 
     private PointF position;
     private int color;
@@ -60,14 +59,6 @@ public class Ball {
 
     public float getSize() {
         return size;
-    }
-
-    public void setConstSize(float constSize) {
-        this.constSize = constSize;
-    }
-
-    public float getConstSize() {
-        return constSize;
     }
 
     public void setSize(float size) {
