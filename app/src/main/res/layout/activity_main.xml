@@ -27,14 +27,14 @@
         app:pv_nodes_speed_max="5"
         app:pv_nodes_speed_min="1" />
 
-    <!--<io.singulart.particle_progress_bar.ParticleProgressBar-->
-        <!--android:layout_width="80dp"-->
-        <!--android:layout_height="80dp"-->
-        <!--app:ppb_count_balls="8"-->
-        <!--android:visibility="visible"-->
-        <!--app:ppb_color="@color/colorWhite"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
+    <io.singulart.particle_progress_bar.ParticleProgressBar
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:ppb_count_balls="8"
+        android:visibility="visible"
+        app:ppb_color="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
