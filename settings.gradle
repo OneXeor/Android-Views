@@ -1,1 +1,1 @@
-include ':app', ':particles_view', ':particle_progress_bar'
+include ':app', ':particles_view', ':particle_progress_bar', ':pulse_button'

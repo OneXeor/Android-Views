@@ -22,6 +22,8 @@ public class ParticleProgressBar extends android.support.v7.widget.AppCompatImag
     private int startScale;
     private int color;
 
+    private boolean enabled;
+
     private Timer timer;
 
     long startTime;
@@ -43,6 +45,7 @@ public class ParticleProgressBar extends android.support.v7.widget.AppCompatImag
             final TypedArray a = context.obtainStyledAttributes(attributeSet,
                     R.styleable.ParticleProgressBar, 0, 0);
 
+            enabled = a.getBoolean(R.styleable.ParticleProgressBar_ppb_enabled, true);
             BALLS_COUNT = a.getInteger(R.styleable.ParticleProgressBar_ppb_count_balls, 8);
             color = a.getColor(R.styleable.ParticleProgressBar_ppb_color, Color.WHITE);
 
@@ -56,6 +59,8 @@ public class ParticleProgressBar extends android.support.v7.widget.AppCompatImag
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (!enabled)
+            return;
         for (Ball ball : balls) {
             ball.render(canvas);
         }

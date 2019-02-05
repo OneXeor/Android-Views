@@ -151,6 +151,7 @@ public class ParticlesView extends View {
         invalidate();
     }
 
+    // This part was steal from js code
     private void repulseParticles(DotItem dotItem) {
         if (touchPosY > 0 && touchPosX > 0) {
             float dxM = dotItem.getPosition().x - touchPosX;

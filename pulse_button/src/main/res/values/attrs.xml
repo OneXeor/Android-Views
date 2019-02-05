@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PulseButton">
+
+        <attr name="pb_src" format="reference" />
+
+        <attr name="pb_color_center_circle" format="color" />
+        <attr name="pb_color_center_circle_stroke" format="color" />
+
+        <attr name="pb_color_wave_circle_stroke" format="color" />
+
+        <attr name="pb_wave_padding" format="dimension" />
+        <attr name="pb_inner_circle_stroke_padding" format="dimension" />
+
+    </declare-styleable>
+</resources>

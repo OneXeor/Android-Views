@@ -18,22 +18,36 @@
         app:pv_background_color="@color/colorBlack"
         app:pv_linking_line_color="@color/colorWhite"
         app:pv_linking_line_width="1dp"
-        app:pv_linking_nodes_distance="260"
-        app:pv_touchable="false"
+        app:pv_linking_nodes_distance="200"
         app:pv_nodes_color="@color/colorWhite"
-        app:pv_nodes_count="200"
+        app:pv_nodes_count="100"
         app:pv_nodes_size="2dp"
-        app:pv_nodes_speed_max="5"
-        app:pv_nodes_speed_min="1" />
+        app:pv_nodes_speed_max="10"
+        app:pv_nodes_speed_min="1"
+        app:pv_touchable="false" />
+
+
+    <io.singulart.pulse_button.PulseButton
+        android:id="@+id/btn.pulse"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:pb_color_center_circle_stroke="#21D9CC"
+        app:pb_inner_circle_stroke_padding="7dp"
+        app:pb_src="@drawable/ic_arrow_right"
+        app:pb_wave_padding="20dp" />
 
     <io.singulart.particle_progress_bar.ParticleProgressBar
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:ppb_count_balls="8"
         android:visibility="visible"
-        app:ppb_color="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:ppb_color="@color/colorWhite"
+        app:ppb_count_balls="8"
+        app:ppb_enabled="false" />
 </android.support.constraint.ConstraintLayout>
