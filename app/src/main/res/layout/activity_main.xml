@@ -36,6 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:pb_stroke_width_of_center_circle="1dp"
         app:pb_stroke_width_of_outer_circle="1dp"
+        app:pb_color_center_circle_stroke="#21D9CC"
         app:pb_inner_circle_stroke_padding="7dp"
         app:pb_wave_padding="20dp" />
 
@@ -47,7 +48,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias=".75"
         app:ppb_color="@color/colorWhite"
         app:ppb_count_balls="8"
-        app:ppb_enabled="false" />
+        app:ppb_enabled="true" />
 </android.support.constraint.ConstraintLayout>

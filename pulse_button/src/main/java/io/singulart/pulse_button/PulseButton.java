@@ -19,7 +19,7 @@ import android.view.View;
 public class PulseButton extends View {
 
     private Paint circlePaint;
-    private Paint circleStrokePaint;
+    private Paint circleStrokeInnerPaint;
     private Paint circleStrokeOuterPaint;
 
     private int pbColorCenterCircle;
@@ -64,7 +64,7 @@ public class PulseButton extends View {
             int pbColorWaveCircleStroke = a.getColor(R.styleable.PulseButton_pb_color_wave_circle_stroke, Color.WHITE);
             pbColorWaveCircleStrokeArr = getARGB(pbColorWaveCircleStroke);
 
-            pbInnerCircleStrokePadding = a.getDimension(R.styleable.PulseButton_pb_stroke_width_of_center_circle, 2);
+            pbInnerCircleStrokeWidth = a.getDimension(R.styleable.PulseButton_pb_stroke_width_of_center_circle, 2);
             pbOuterCircleStrokeWidth = a.getDimension(R.styleable.PulseButton_pb_stroke_width_of_outer_circle, 2);
             int srcId = a.getResourceId(R.styleable.PulseButton_pb_src, -1);
 
@@ -85,20 +85,20 @@ public class PulseButton extends View {
     }
 
     private void initDef() {
-        circlePaint = new Paint();
+        circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setColor(pbColorCenterCircle);
 
-        circleStrokePaint = new Paint();
-        circleStrokePaint.setColor(pbColorCenterCircleStroke);
-        circleStrokePaint.setStyle(Paint.Style.STROKE);
-        circleStrokePaint.setStrokeWidth(pbInnerCircleStrokeWidth);
+        circleStrokeInnerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        circleStrokeInnerPaint.setColor(pbColorCenterCircleStroke);
+        circleStrokeInnerPaint.setStyle(Paint.Style.STROKE);
+        circleStrokeInnerPaint.setStrokeWidth(pbInnerCircleStrokeWidth);
 
         srcRect = new Rect();
         if (bmIcon != null)
             srcRect.set((int) (getCenterWidth() - (bmIcon.getWidth() / 2F)) + 4, (int) (getCenterHeight() - (bmIcon.getHeight() / 2F)),
                     (int) (getCenterWidth() + (bmIcon.getWidth() / 2F)) + 4, (int) getCenterHeight() + (bmIcon.getHeight() / 2));
 
-        circleStrokeOuterPaint = new Paint();
+        circleStrokeOuterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circleStrokeOuterPaint.setARGB(pbColorWaveCircleStrokeArr[0], pbColorWaveCircleStrokeArr[1],
                 pbColorWaveCircleStrokeArr[2], pbColorWaveCircleStrokeArr[3]);
         circleStrokeOuterPaint.setStyle(Paint.Style.STROKE);
@@ -118,7 +118,7 @@ public class PulseButton extends View {
         super.onDraw(canvas);
 
         canvas.drawCircle(getCenterWidth(), getCenterHeight(), getRadius(), circlePaint);
-        canvas.drawCircle(getCenterWidth(), getCenterHeight(), getRadius() - pbInnerCircleStrokePadding, circleStrokePaint);
+        canvas.drawCircle(getCenterWidth(), getCenterHeight(), getRadius() - pbInnerCircleStrokePadding, circleStrokeInnerPaint);
 
         int alpha = (int) ((pbWavePaddingInterAct / pbWavePadding) * DEFAULT_ALPHA);
 
