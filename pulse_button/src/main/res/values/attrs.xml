@@ -7,10 +7,15 @@
         <attr name="pb_color_center_circle" format="color" />
         <attr name="pb_color_center_circle_stroke" format="color" />
 
+        <attr name="pb_stroke_width_of_center_circle" format="dimension" />
+        <attr name="pb_stroke_width_of_outer_circle" format="dimension" />
+
         <attr name="pb_color_wave_circle_stroke" format="color" />
 
         <attr name="pb_wave_padding" format="dimension" />
         <attr name="pb_inner_circle_stroke_padding" format="dimension" />
+
+        <attr name="pb_pulse_speed" format="integer" />
 
     </declare-styleable>
 </resources>

@@ -34,6 +34,8 @@
         android:layout_margin="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:pb_stroke_width_of_center_circle="1dp"
+        app:pb_stroke_width_of_outer_circle="1dp"
         app:pb_inner_circle_stroke_padding="7dp"
         app:pb_wave_padding="20dp" />
 

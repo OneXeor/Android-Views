@@ -31,6 +31,9 @@ public class PulseButton extends View {
 
     private float pbInnerCircleStrokePadding;
 
+    private float pbInnerCircleStrokeWidth;
+    private float pbOuterCircleStrokeWidth;
+
     @Nullable
     private Bitmap bmIcon;
 
@@ -61,6 +64,8 @@ public class PulseButton extends View {
             int pbColorWaveCircleStroke = a.getColor(R.styleable.PulseButton_pb_color_wave_circle_stroke, Color.WHITE);
             pbColorWaveCircleStrokeArr = getARGB(pbColorWaveCircleStroke);
 
+            pbInnerCircleStrokePadding = a.getDimension(R.styleable.PulseButton_pb_stroke_width_of_center_circle, 2);
+            pbOuterCircleStrokeWidth = a.getDimension(R.styleable.PulseButton_pb_stroke_width_of_outer_circle, 2);
             int srcId = a.getResourceId(R.styleable.PulseButton_pb_src, -1);
 
             if (srcId != -1) {
@@ -86,7 +91,7 @@ public class PulseButton extends View {
         circleStrokePaint = new Paint();
         circleStrokePaint.setColor(pbColorCenterCircleStroke);
         circleStrokePaint.setStyle(Paint.Style.STROKE);
-        circleStrokePaint.setStrokeWidth(1);
+        circleStrokePaint.setStrokeWidth(pbInnerCircleStrokeWidth);
 
         srcRect = new Rect();
         if (bmIcon != null)
@@ -97,7 +102,7 @@ public class PulseButton extends View {
         circleStrokeOuterPaint.setARGB(pbColorWaveCircleStrokeArr[0], pbColorWaveCircleStrokeArr[1],
                 pbColorWaveCircleStrokeArr[2], pbColorWaveCircleStrokeArr[3]);
         circleStrokeOuterPaint.setStyle(Paint.Style.STROKE);
-        circleStrokeOuterPaint.setStrokeWidth(1);
+        circleStrokeOuterPaint.setStrokeWidth(pbOuterCircleStrokeWidth);
 
         invalidate();
     }
