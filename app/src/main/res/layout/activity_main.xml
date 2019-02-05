@@ -34,9 +34,7 @@
         android:layout_margin="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:pb_color_center_circle_stroke="#21D9CC"
         app:pb_inner_circle_stroke_padding="7dp"
-        app:pb_src="@drawable/ic_arrow_right"
         app:pb_wave_padding="20dp" />
 
     <io.singulart.particle_progress_bar.ParticleProgressBar

@@ -31,6 +31,7 @@ public class PulseButton extends View {
 
     private float pbInnerCircleStrokePadding;
 
+    @Nullable
     private Bitmap bmIcon;
 
     private Rect srcRect;
@@ -60,17 +61,18 @@ public class PulseButton extends View {
             int pbColorWaveCircleStroke = a.getColor(R.styleable.PulseButton_pb_color_wave_circle_stroke, Color.WHITE);
             pbColorWaveCircleStrokeArr = getARGB(pbColorWaveCircleStroke);
 
-            int srcId = a.getResourceId(R.styleable.PulseButton_pb_src, R.drawable.ic_arrow_right);
+            int srcId = a.getResourceId(R.styleable.PulseButton_pb_src, -1);
 
-            Drawable drawable = ContextCompat.getDrawable(context, srcId);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && drawable instanceof VectorDrawable) {
-                bmIcon = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bmIcon);
-                drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-                drawable.draw(canvas);
-            } else
-                bmIcon = BitmapFactory.decodeResource(getResources(), srcId);
-
+            if (srcId != -1) {
+                Drawable drawable = ContextCompat.getDrawable(context, srcId);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && drawable instanceof VectorDrawable) {
+                    bmIcon = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(bmIcon);
+                    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                    drawable.draw(canvas);
+                } else
+                    bmIcon = BitmapFactory.decodeResource(getResources(), srcId);
+            }
 
             initDef();
             a.recycle();
@@ -87,8 +89,9 @@ public class PulseButton extends View {
         circleStrokePaint.setStrokeWidth(1);
 
         srcRect = new Rect();
-        srcRect.set((int) (getCenterWidth() - (bmIcon.getWidth() / 2F)) + 4, (int) (getCenterHeight() - (bmIcon.getHeight() / 2F)),
-                (int) (getCenterWidth() + (bmIcon.getWidth() / 2F)) + 4, (int) getCenterHeight() + (bmIcon.getHeight() / 2));
+        if (bmIcon != null)
+            srcRect.set((int) (getCenterWidth() - (bmIcon.getWidth() / 2F)) + 4, (int) (getCenterHeight() - (bmIcon.getHeight() / 2F)),
+                    (int) (getCenterWidth() + (bmIcon.getWidth() / 2F)) + 4, (int) getCenterHeight() + (bmIcon.getHeight() / 2));
 
         circleStrokeOuterPaint = new Paint();
         circleStrokeOuterPaint.setARGB(pbColorWaveCircleStrokeArr[0], pbColorWaveCircleStrokeArr[1],
@@ -125,7 +128,8 @@ public class PulseButton extends View {
             pbWavePaddingInterAct -= pbWavePadding / 90;
 
 
-        canvas.drawBitmap(bmIcon, null, srcRect, null);
+        if (bmIcon != null)
+            canvas.drawBitmap(bmIcon, null, srcRect, null);
         invalidate();
     }
 
