@@ -30,6 +30,7 @@
     <io.singulart.pulse_button.PulseButton
         android:id="@+id/btn.pulse"
         android:layout_width="100dp"
+        app:pb_pulse_speed="90"
         android:layout_height="100dp"
         android:layout_margin="60dp"
         app:layout_constraintStart_toStartOf="parent"

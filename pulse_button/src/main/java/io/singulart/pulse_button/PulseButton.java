@@ -34,6 +34,8 @@ public class PulseButton extends View {
     private float pbInnerCircleStrokeWidth;
     private float pbOuterCircleStrokeWidth;
 
+    private float pbPulseSpeed;
+
     @Nullable
     private Bitmap bmIcon;
 
@@ -63,6 +65,8 @@ public class PulseButton extends View {
             pbInnerCircleStrokePadding = a.getDimension(R.styleable.PulseButton_pb_inner_circle_stroke_padding, 20);
             int pbColorWaveCircleStroke = a.getColor(R.styleable.PulseButton_pb_color_wave_circle_stroke, Color.WHITE);
             pbColorWaveCircleStrokeArr = getARGB(pbColorWaveCircleStroke);
+
+            pbPulseSpeed = a.getInt(R.styleable.PulseButton_pb_pulse_speed, 90);
 
             pbInnerCircleStrokeWidth = a.getDimension(R.styleable.PulseButton_pb_stroke_width_of_center_circle, 2);
             pbOuterCircleStrokeWidth = a.getDimension(R.styleable.PulseButton_pb_stroke_width_of_outer_circle, 2);
@@ -130,7 +134,7 @@ public class PulseButton extends View {
         if (pbWavePaddingInterAct <= 0)
             pbWavePaddingInterAct = pbWavePadding;
         else
-            pbWavePaddingInterAct -= pbWavePadding / 90;
+            pbWavePaddingInterAct -= pbWavePadding / pbPulseSpeed;
 
 
         if (bmIcon != null)
