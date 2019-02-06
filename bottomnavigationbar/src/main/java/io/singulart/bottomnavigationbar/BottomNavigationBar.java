@@ -4,20 +4,16 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.view.menu.MenuBuilder;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 
 public class BottomNavigationBar extends View {
 
@@ -37,9 +33,11 @@ public class BottomNavigationBar extends View {
     private float rectBottom;
 
     private float cutoutDeep;
-    private float cutoutOffset;
+    private float cutoutButtomOffset;
     private float bnbCutoutLeftTop_radius;
     private float bnbCutoutRightTop_radius;
+    private float bnbCutoutBottomLeft_radius;
+    private float bnbCutoutBottomRight_radius;
 
     private boolean centerBtn;
 
@@ -52,6 +50,8 @@ public class BottomNavigationBar extends View {
     private RectF radiusRect = new RectF();
     @NonNull
     private Paint backPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    @NonNull
+    private Paint centerBtnPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     public BottomNavigationBar(Context context) {
         super(context);
@@ -86,9 +86,11 @@ public class BottomNavigationBar extends View {
             rectBottom = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_rect_bottom, 0);
 
             cutoutDeep = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_cutout_deep, 0);
-            cutoutOffset = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_cutout_offset, 0);
+            cutoutButtomOffset = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_cutout_bottom_offset, 0);
             bnbCutoutLeftTop_radius = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_cutout_leftTop_radius, 0);
             bnbCutoutRightTop_radius = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_cutout_rightTop_radius, 0);
+            bnbCutoutBottomLeft_radius = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_cutout_bottomLeft_radius, 0);
+            bnbCutoutBottomRight_radius = typedArray.getDimension(R.styleable.BottomNavigationBar_bnb_cutout_bottomRight_radius, 0);
 
             int menuRes = typedArray.getResourceId(R.styleable.BottomNavigationBar_bnb_items, -1);
 
@@ -105,52 +107,67 @@ public class BottomNavigationBar extends View {
     private void setUp() {
         backPaint.setColor(barColor);
         backPaint.setStyle(Paint.Style.FILL);
-    }
 
-    private Path path = new Path();
+        centerBtnPaint.setColor(Color.WHITE);
+        centerBtnPaint.setStyle(Paint.Style.FILL);
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         backPath.rewind();
-        radiusRect.set(0, shadowRadius, topLeftRadius * 2, topLeftRadius * 2);
+        radiusRect.set(0, shadowRadius, topLeftRadius * 2, topLeftRadius * 1.5F);
         backPath.moveTo(0, shadowRadius);
         backPath.arcTo(radiusRect, 180, 90, false);
 
+        if (centerBtn) {
+            backPath.lineTo(getCenter() - cutoutDeep - (bnbCutoutLeftTop_radius * 2), shadowRadius);
+            // Center cutout radius top left
+            radiusRect.set((getCenter() - cutoutDeep - (bnbCutoutLeftTop_radius * 2)),
+                    shadowRadius,
+                    getCenter() - cutoutDeep,
+                    bnbCutoutLeftTop_radius * 2);
+            backPath.arcTo(radiusRect, 270, 90, false);
 
-        radiusRect.set(getWidth() - ((topRightRadius * 2) + shadowRadius), shadowRadius, getWidth(), (topRightRadius * 2) + shadowRadius);
+            // Center cutout left bottom
+            radiusRect.set((getCenter() - cutoutDeep),
+                    -(shadowRadius + bnbCutoutBottomLeft_radius / 1.6F),
+                    getCenter() + bnbCutoutBottomLeft_radius,
+                    cutoutButtomOffset);
+            backPath.arcTo(radiusRect, 180, -90, false);
+
+            // Center cutout right bottom
+            radiusRect.set((getCenter() - bnbCutoutBottomRight_radius),
+                    -(shadowRadius + bnbCutoutBottomRight_radius / 1.6F),
+                    getCenter() + cutoutDeep, cutoutButtomOffset);
+            backPath.arcTo(radiusRect, 90, -90, false);
+
+            // Center cutout radius top right
+            radiusRect.set((getCenter() + cutoutDeep),
+                    shadowRadius,
+                    getCenter() + cutoutDeep + (bnbCutoutRightTop_radius * 2),
+                    bnbCutoutRightTop_radius * 2);
+            backPath.arcTo(radiusRect, 180, 90, false);
+
+//            backPath.close();
+        }
+
+        radiusRect.set(getWidth() - ((topRightRadius * 2) + shadowRadius), shadowRadius, getWidth(), (topRightRadius * 1.5F) + shadowRadius);
         backPath.lineTo(getWidth() - shadowRadius, shadowRadius);
         backPath.arcTo(radiusRect, 270, 90, false);
 
         backPath.lineTo(getWidth(), getHeight());
         backPath.lineTo(0, getHeight());
         backPath.lineTo(0, shadowRadius + topLeftRadius);
-
         backPath.close();
 
 
         if (shadowRadius > 0)
             backPaint.setShadowLayer(shadowRadius, 0, -2, Color.WHITE);
 
-        if (centerBtn) {
-            backPath.lineTo(getCenter() - cutoutDeep, shadowRadius);
-
-            radiusRect.set(getCenter() - cutoutDeep - (bnbCutoutLeftTop_radius * 2), shadowRadius, getCenter() - cutoutDeep, bnbCutoutLeftTop_radius * 2);
-            backPath.arcTo(radiusRect, 270, 90);
-
-            path.rewind();
-            path.addCircle(getCenter(), -cutoutOffset, cutoutDeep, Path.Direction.CW);
-
-            radiusRect.set((getCenter() + cutoutDeep), shadowRadius, getCenter() + cutoutDeep + (bnbCutoutRightTop_radius * 2), bnbCutoutRightTop_radius * 2);
-            backPath.arcTo(radiusRect, 180, 90, false);
-
-            canvas.clipPath(path, Region.Op.DIFFERENCE);
-        }
         canvas.drawPath(backPath, backPaint);
-
-
-        invalidate();
+//        invalidate();
     }
 
     private float getCenter() {

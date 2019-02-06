@@ -8,23 +8,23 @@
     tools:context=".MainActivity">
 
     <com.onexeor.particlesview.ParticlesView
-        android:id="@+id/p.v"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:pv_background_color="@color/colorBlack"
-        app:pv_linking_line_color="@color/colorWhite"
-        app:pv_linking_line_width="1dp"
-        app:pv_linking_nodes_distance="200"
-        app:pv_nodes_color="@color/colorWhite"
-        app:pv_nodes_count="100"
-        app:pv_nodes_size="2dp"
-        app:pv_nodes_speed_max="10"
-        app:pv_nodes_speed_min="1"
-        app:pv_touchable="false" />
+    android:id="@+id/p.v"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:pv_background_color="@color/colorBlack"
+    app:pv_linking_line_color="@color/colorWhite"
+    app:pv_linking_line_width="1dp"
+    app:pv_linking_nodes_distance="200"
+    app:pv_nodes_color="@color/colorWhite"
+    app:pv_nodes_count="100"
+    app:pv_nodes_size="2dp"
+    app:pv_nodes_speed_max="10"
+    app:pv_nodes_speed_min="1"
+    app:pv_touchable="false" />
 
 
     <io.singulart.pulse_button.PulseButton
@@ -54,18 +54,33 @@
         app:layout_constraintVertical_bias="0.1"
         app:ppb_color="@color/colorWhite"
         app:ppb_count_balls="8"
-        app:ppb_enabled="true" />
+        app:ppb_enabled="false" />
+
+    <io.singulart.bottomnavigationbar.CenterNavigationButton
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:layout_marginBottom="38dp"
+        app:cnb_foreground_color="#21D9CC"
+        app:cnb_background_color="#282B43"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <io.singulart.bottomnavigationbar.BottomNavigationBar
+        android:id="@+id/bnb"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         app:bnb_background_color="#282B43"
         app:bnb_center_btn="true"
-        app:bnb_cutout_deep="58dp"
-        app:bnb_cutout_offset="24dp"
+        app:bnb_cutout_bottomLeft_radius="50dp"
+        app:bnb_cutout_bottomRight_radius="50dp"
+        app:bnb_cutout_bottom_offset="42dp"
+        app:bnb_cutout_deep="46dp"
+        app:bnb_cutout_leftTop_radius="10dp"
+        app:bnb_cutout_rightTop_radius="10dp"
         app:bnb_shadow_radius="0dp"
-        app:bnb_top_left_radius="60dp"
-        app:bnb_top_right_radius="60dp"
+        app:bnb_top_left_radius="50dp"
+        app:bnb_top_right_radius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

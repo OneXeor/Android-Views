@@ -8,11 +8,8 @@ import android.util.AttributeSet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 public class ParticleProgressBar extends android.support.v7.widget.AppCompatImageView {
-
-    private int framesPerSecond = 60;
 
     private float BALL_SIZE = 10;
     private int BALLS_COUNT;
@@ -23,8 +20,6 @@ public class ParticleProgressBar extends android.support.v7.widget.AppCompatImag
     private int color;
 
     private boolean enabled;
-
-    private Timer timer;
 
     long startTime;
 
@@ -97,8 +92,8 @@ public class ParticleProgressBar extends android.support.v7.widget.AppCompatImag
         if (balls != null) {
             for (int i = 0; i < balls.size(); i++) {
 
-                double centerViewW = getWidth() / 2;
-                double centerViewH = getHeight() / 2;
+                double centerViewW = getWidth() / 2F;
+                double centerViewH = getHeight() / 2F;
                 double radius = centerViewW * 0.5; //(getWidth() / 2);
 
                 Ball ball = balls.get(i);
@@ -115,16 +110,12 @@ public class ParticleProgressBar extends android.support.v7.widget.AppCompatImag
     private void createBalls() {
         balls = new ArrayList<>();
         for (int i = 0; i < BALLS_COUNT; i++) {
-            balls.add(new Ball(BALL_SIZE, color, (360 / BALLS_COUNT) * i));
+            balls.add(new Ball(BALL_SIZE, color, (360F / BALLS_COUNT) * i));
         }
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        if (timer != null) {
-            timer.purge();
-            timer.cancel();
-        }
         super.onDetachedFromWindow();
     }
 }
