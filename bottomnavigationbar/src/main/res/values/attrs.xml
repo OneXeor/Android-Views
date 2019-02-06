@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BottomNavigationBar">
+        <attr name="bnb_background_color" format="color" />
+
+        <attr name="bnb_top_left_radius" format="dimension" />
+        <attr name="bnb_top_right_radius" format="dimension" />
+
+        <attr name="bnb_shadow_radius" format="dimension" />
+
+        <attr name="bnb_items" format="reference" />
+
+        <attr name="bnb_center_btn" format="boolean" />
+
+        <attr name="bnb_cutout_deep" format="dimension" />
+        <attr name="bnb_cutout_offset" format="dimension" />
+        <attr name="bnb_cutout_leftTop_radius" format="dimension" />
+        <attr name="bnb_cutout_rightTop_radius" format="dimension" />
+
+        <attr name="bnb_rect_left" format="dimension" />
+        <attr name="bnb_rect_top" format="dimension" />
+        <attr name="bnb_rect_right" format="dimension" />
+        <attr name="bnb_rect_bottom" format="dimension" />
+
+        <attr name="bnb_start_angle" format="integer" />
+        <attr name="bnb_sweep_angle" format="integer" />
+    </declare-styleable>
+</resources>
