@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_games"
+        android:icon="@drawable/ic_item_games"
+        android:title="Games" />
+
+    <item
+        android:id="@+id/action_social"
+        android:icon="@drawable/ic_item_social"
+        android:title="Social" />
+
+    <item
+        android:id="@+id/action_workout"
+        android:icon="@drawable/ic_item_social"
+        android:title="Workout" />
+    <item
+        android:id="@+id/action_stats"
+        android:icon="@drawable/ic_item_stats"
+        android:title="Stats" />
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_item_more"
+        android:title="More" />
+</menu>

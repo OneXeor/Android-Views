@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +14,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class CenterNavigationButton extends View {
+import static io.singulart.bottomnavigationbar.Constants.USER_CLICK_OFFSET;
 
+public class CenterNavigationButton extends View {
 
     private int backgroundColor;
 
     private int foregroundColor;
+    private int foregroundColorNormal;
 
     @NonNull
     private Path btnPath = new Path();
@@ -32,6 +35,11 @@ public class CenterNavigationButton extends View {
     private Paint btnForegroundArcPaint = new Paint();
     @NonNull
     RectF centerArcRect = new RectF();
+
+    private ButtonState buttonState;
+
+    @Nullable
+    private BottomNavigationBar bottomNavigationBar;
 
     private float tX = -1;
     private float tY = -1;
@@ -54,9 +62,20 @@ public class CenterNavigationButton extends View {
 
             foregroundColor = a.getColor(R.styleable.CenterNavigationButton_cnb_foreground_color, Color.WHITE);
 
+            foregroundColorNormal = a.getColor(R.styleable.CenterNavigationButton_cnb_foreground_color_normal, Color.WHITE);
+
             a.recycle();
             setUp();
         }
+    }
+
+    public void setBottomNavigationBar(@Nullable BottomNavigationBar bottomNavigationBar) {
+        this.bottomNavigationBar = bottomNavigationBar;
+    }
+
+    public void setButtonState(@NonNull ButtonState buttonState) {
+        this.buttonState = buttonState;
+        invalidate();
     }
 
     @Override
@@ -68,22 +87,30 @@ public class CenterNavigationButton extends View {
                 tX = event.getX();
                 tY = event.getY();
                 invalidate();
-                break;
+                return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
                 tX = -1;
                 tY = -1;
+
+                Rect view = new Rect();
+                getDrawingRect(view);
+                if (view.intersect(new Rect((int) event.getX() - USER_CLICK_OFFSET, (int) event.getY() - USER_CLICK_OFFSET, (int) event.getX() + USER_CLICK_OFFSET, (int) event.getY() + USER_CLICK_OFFSET))) {
+                    setButtonState(ButtonState.PRESSED);
+                    if (bottomNavigationBar != null)
+                        bottomNavigationBar.setLastSelectedItem(2);
+                }
                 invalidate();
-                break;
+                return true;
 
         }
-        return true;
+        return false;
     }
 
     private void setUp() {
         btnPaint.setStyle(Paint.Style.FILL);
         btnPaint.setAntiAlias(true);
-
+        btnPaint.setColor(backgroundColor);
 
         btnForegroundPaint.setStyle(Paint.Style.FILL);
         btnForegroundPaint.setAntiAlias(true);
@@ -99,7 +126,16 @@ public class CenterNavigationButton extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        btnPaint.setColor(tX != -1 ? Color.WHITE : backgroundColor);
+        if (buttonState == ButtonState.PRESSED) {
+            btnForegroundPaint.setShadowLayer(18, 0, 0, Color.argb(201, 33, 217, 204));
+            btnForegroundArcPaint.setShadowLayer(18, 0, 0, Color.argb(201, 33, 217, 204));
+        } else {
+            btnForegroundPaint.setShadowLayer(0, 0, 0, 0);
+            btnForegroundArcPaint.setShadowLayer(0, 0, 0, 0);
+        }
+
+        btnForegroundArcPaint.setColor(buttonState == ButtonState.PRESSED ? foregroundColor : foregroundColorNormal);
+        btnForegroundPaint.setColor(buttonState == ButtonState.PRESSED ? foregroundColor : foregroundColorNormal);
 
         float cX = getCenterWidth();
         float cY = getCenterHeight();

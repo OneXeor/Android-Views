@@ -8,23 +8,23 @@
     tools:context=".MainActivity">
 
     <com.onexeor.particlesview.ParticlesView
-    android:id="@+id/p.v"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:pv_background_color="@color/colorBlack"
-    app:pv_linking_line_color="@color/colorWhite"
-    app:pv_linking_line_width="1dp"
-    app:pv_linking_nodes_distance="200"
-    app:pv_nodes_color="@color/colorWhite"
-    app:pv_nodes_count="100"
-    app:pv_nodes_size="2dp"
-    app:pv_nodes_speed_max="10"
-    app:pv_nodes_speed_min="1"
-    app:pv_touchable="false" />
+        android:id="@+id/p.v"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:pv_background_color="@color/colorBlack"
+        app:pv_linking_line_color="@color/colorWhite"
+        app:pv_linking_line_width="0.5dp"
+        app:pv_linking_nodes_distance="100dp"
+        app:pv_nodes_color="@color/colorWhite"
+        app:pv_nodes_count="100"
+        app:pv_nodes_size="2dp"
+        app:pv_nodes_speed_max="10"
+        app:pv_nodes_speed_min="1"
+        app:pv_touchable="false" />
 
 
     <io.singulart.pulse_button.PulseButton
@@ -57,11 +57,13 @@
         app:ppb_enabled="false" />
 
     <io.singulart.bottomnavigationbar.CenterNavigationButton
+        android:id="@+id/cnb"
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:layout_marginBottom="38dp"
-        app:cnb_foreground_color="#21D9CC"
         app:cnb_background_color="#282B43"
+        app:cnb_foreground_color="#21D9CC"
+        app:cnb_foreground_color_normal="#666DA5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -78,7 +80,11 @@
         app:bnb_cutout_deep="46dp"
         app:bnb_cutout_leftTop_radius="10dp"
         app:bnb_cutout_rightTop_radius="10dp"
+        app:bnb_item_selected_color="#21D9CC"
+        app:bnb_items="@menu/sample_menu"
         app:bnb_shadow_radius="0dp"
+        app:bnb_text_item_color="#666DA5"
+        app:bnb_text_item_size="14sp"
         app:bnb_top_left_radius="50dp"
         app:bnb_top_right_radius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"

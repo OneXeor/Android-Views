@@ -12,7 +12,7 @@
         <attr name="pv_touchable_radius" format="dimension" />
         <attr name="pv_touchable" format="boolean" />
 
-        <attr name="pv_linking_nodes_distance" format="integer" />
+        <attr name="pv_linking_nodes_distance" format="dimension" />
         <attr name="pv_linking_line_color" format="color" />
         <attr name="pv_linking_line_width" format="dimension" />
 

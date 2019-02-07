@@ -26,7 +26,7 @@ public class ParticlesView extends View {
 
     private int[] lineColor;
 
-    private int linkingNodeDistance;
+    private float linkingNodeDistance;
 
     private int linkingLineColor;
 
@@ -87,7 +87,7 @@ public class ParticlesView extends View {
         if (attributeSet != null) {
             final TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.ParticlesView, 0, 0);
 
-            linkingNodeDistance = a.getInt(R.styleable.ParticlesView_pv_linking_nodes_distance, 200);
+            linkingNodeDistance = a.getDimension(R.styleable.ParticlesView_pv_linking_nodes_distance, 200);
             linkingLineColor = a.getColor(R.styleable.ParticlesView_pv_linking_line_color, Color.WHITE);
             linkingLineWidth = a.getDimension(R.styleable.ParticlesView_pv_linking_line_width, 2);
 
