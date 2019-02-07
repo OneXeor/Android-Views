@@ -22,17 +22,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.TabHost;
 
 import static io.singulart.bottomnavigationbar.Constants.USER_CLICK_OFFSET;
 
 public class BottomNavigationBar extends View {
 
+    private final String TAG = this.getClass().getSimpleName();
     private int barColor;
 
     private int itemSelectedColor;
@@ -58,6 +61,9 @@ public class BottomNavigationBar extends View {
 
     @Nullable
     private CenterNavigationButton centerNavigationButton;
+
+    @Nullable
+    private OnItemSelectedListener onItemSelectedListener;
 
     @Nullable
     private Menu menu;
@@ -145,7 +151,6 @@ public class BottomNavigationBar extends View {
     }
 
 
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -171,8 +176,19 @@ public class BottomNavigationBar extends View {
         return super.dispatchTouchEvent(event);
     }
 
+    public void setOnItemSelectedListener(@Nullable OnItemSelectedListener onItemSelectedListener) {
+        this.onItemSelectedListener = onItemSelectedListener;
+    }
+
     public void setLastSelectedItem(int lastSelectedItem) {
         this.lastSelectedItem = lastSelectedItem;
+        if (menu != null) {
+            MenuItem item = menu.getItem(lastSelectedItem);
+            if (onItemSelectedListener != null)
+                onItemSelectedListener.onItemSelected(lastSelectedItem, item);
+            else
+                Log.d(TAG, "OnItemSelectedListener not implemented");
+        }
         invalidate();
     }
 
